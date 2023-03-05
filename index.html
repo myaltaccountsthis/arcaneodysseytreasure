@@ -20,8 +20,9 @@
 				justify-content: center;
 				align-items: center;
 				column-gap: 1vw;
-				width: 20%;
 				margin: auto;
+				width: 60%;
+				max-width: 300px;
 			}
 			.flex * {
 				text-align: center;
@@ -41,6 +42,16 @@
 			}
 			button:hover {
 				cursor: pointer;
+			}
+			@media (min-width: 601px) {
+				.flex {
+					width: 50%;
+				}
+			}
+			@media (min-width: 721px) {
+				.flex {
+					width: 30%;
+				}
 			}
 		</style>
 		<script type="text/javascript">
