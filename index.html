@@ -21,12 +21,19 @@
 				justify-content: center;
 				align-items: center;
 				column-gap: 1vw;
-				margin: auto;
+				margin: 4px auto;
 				width: 60%;
 				max-width: 300px;
 			}
 			.flex * {
 				text-align: center;
+			}
+			.flex > div {
+				min-width: 150px;
+			}
+			#info {
+				margin: 0px;
+				margin-top: 16px;
 			}
 			svg {
 				width: 25px;
@@ -40,6 +47,17 @@
 				padding: 0px;
 				border: 0;
 				background-color: transparent;
+			}
+			button#visibility_button {
+				padding: 4px 6px;
+				border: 1px black solid;
+				background-color: whitesmoke;
+			}
+			button#visibility_button:hover {
+				background-color: lightgray;
+			}
+			button#visibility_button:active {
+				background-color: darkgray;
 			}
 			button:hover {
 				cursor: pointer;
@@ -57,20 +75,25 @@
 		</style>
 		<script type="text/javascript">
 			const directionNames = ["East", "East Southeast", "Southeast", "South Southeast", "South", "South Southwest", "Southwest", "West Southwest", "West", "West Northwest", "Northwest", "North Northwest", "North", "North Northeast", "Northeast", "East Northeast"];
-			let directionIndex = 0;
 			const distanceNames = ["Few paces", "Halfway", "Near sea"];
-			let distanceIndex = 1;
 			const islandNames = [
 				"Frostmill Island", "Ravenna", "Forest of Cerunno", "Shell Island",
 				"Harvest Island", "Whitesummit", "Munera Garden", "Wind-Row Island",
 				"Palo Town", "Thorin's Refuge", "Limestone Key", "Akursius Keep", "Silverhold"
 			];
+			let directionIndex = 0;
+			let distanceIndex = 1;
 			let islandIndex = 0;
+			if (window.sessionStorage.getItem("direction")) {
+				directionIndex = parseInt(window.sessionStorage.getItem("direction"));
+				distanceIndex = parseInt(window.sessionStorage.getItem("distance"));
+				islandIndex = parseInt(window.sessionStorage.getItem("island"));
+			}
 
 			const RADIUS = 256;
 
 			const image = new Image();
-			image.onload = () => drawCanvas(ctx);
+			image.onload = () => drawCanvas();
 
 			// angle goes clockwise starting from the x-axis
 			function get2DComponents(angle, radius) {
@@ -128,6 +151,9 @@
 				document.getElementById("direction").innerText = directionNames[directionIndex];
 				document.getElementById("distance").innerText = distanceNames[distanceIndex];
 				document.getElementById("island").innerText = islandNames[islandIndex];
+				window.sessionStorage.setItem("direction", directionIndex);
+				window.sessionStorage.setItem("distance", distanceIndex);
+				window.sessionStorage.setItem("island", islandIndex);
 				ctx = getContext();
 				image.src = islandNames[islandIndex] + ".png";
 			}
@@ -161,17 +187,26 @@
 				islandIndex = (islandIndex + 1) % islandNames.length;
 				update();
 			}
+
+			function toggleInfo(element) {
+				const infoElement = document.getElementById("info");
+				infoElement.style.display = infoElement.style.display == "none" ? "" : "none";
+				element.innerText = infoElement.style.display == "" ? "Hide Info" : "Show Info";
+			}
 		</script>
 	</head>
 	<body onload="update()">
 		<h1>Arcane Odyssey Treasure Chart Locator</h1>
-		<p>
+		<button id="visibility_button" onclick="toggleInfo(this)">Hide Info</button>
+		<br>
+		<p id="info">
 			Use shovel about 2 rowboat lengths apart<br>
 			Zoom in (ctrl+ or ctrl scrollwheel) to enlarge the map<br>
 			This list does not include islands with one treasure<br>
 			Some maps may be slightly off center or too big/small<br>
 			To reduce lag when switching islands, download the website <a target="_blank" href="https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip">here</a>
 		</p>
+		<br>
 		<div>
 			<div class="flex">
 				<button onclick="directionLeft()">
@@ -180,7 +215,7 @@
 						<line x1="25%" y1="50%" x2="75%" y2="100%" />
 					</svg>
 				</button>
-				<p id="direction" style="flex: auto"></p>
+				<div id="direction" style="flex: auto"></div>
 				<button onclick="directionRight()">
 					<svg xmlns="http://www.w3.org/2000/svg">
 						<line x1="25%" y1="0" x2="75%" y2="50%" />
@@ -195,7 +230,7 @@
 						<line x1="25%" y1="50%" x2="75%" y2="100%" />
 					</svg>
 				</button>
-				<p id="distance" style="flex: auto"></p>
+				<div id="distance" style="flex: auto"></div>
 				<button onclick="distanceRight()">
 					<svg xmlns="http://www.w3.org/2000/svg">
 						<line x1="25%" y1="0" x2="75%" y2="50%" />
@@ -210,7 +245,7 @@
 						<line x1="25%" y1="50%" x2="75%" y2="100%" />
 					</svg>
 				</button>
-				<p id="island" style="flex: auto"></p>
+				<div id="island" style="flex: auto"></div>
 				<button onclick="islandRight()">
 					<svg xmlns="http://www.w3.org/2000/svg">
 						<line x1="25%" y1="0" x2="75%" y2="50%" />
@@ -219,7 +254,7 @@
 				</button>
 			</div>
 		</div>
-		<br />
+		<br>
 		<div class="flex">
 			<canvas id="canvas" width="512px" height="512px" ></canvas>
 		</div>
