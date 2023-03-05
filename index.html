@@ -75,30 +75,42 @@
 
 			function drawCanvas() {
 				const ctx = getContext();
-
+				// draw island
 				ctx.drawImage(image, 0, 0);
-				ctx.beginPath();
-				ctx.moveTo(RADIUS, RADIUS);
+				// needed variables
 				const angle = Math.PI * directionIndex / 8;
 				const a1 = angle - Math.PI / 16, a2 = angle + Math.PI / 16
-				ctx.arc(RADIUS, RADIUS, RADIUS, a1, a2);
-				ctx.fillStyle = `rgba(255, 205, 120, .3)`;
-				ctx.fill();
-				// draw the semi sector
-				// TODO change radius to be dependent on distance
 				const r1 = distanceIndex * RADIUS / 3, r2 = r1 + RADIUS / 3;
 				const {xL1, yL1} = get2DComponents(a1, r1);
 				const {xL2, yL2} = get2DComponents(a1, r2);
 				const {xU1, yU1} = get2DComponents(a2, r1);
 				const {xU2, yU2} = get2DComponents(a2, r2);
+				/*
+				// draw angle
+				ctx.fillStyle = "rgba(255, 255, 255, .2)";
+				ctx.strokeStyle = "rgba(0, 0, 0, .4)";
+				ctx.lineWidth = 1;
+				ctx.beginPath();
+				ctx.moveTo(RADIUS, RADIUS);
+				ctx.arc(RADIUS, RADIUS, RADIUS, a1, a2);
+				ctx.closePath();
+				ctx.fill();
+				ctx.stroke();
+				*/
+				// draw the semi sector
+				ctx.fillStyle = "rgba(0, 207, 11, .2)";
+				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+				ctx.lineWidth = 1;
 				ctx.beginPath();
 				ctx.moveTo(xL1, yL1);
 				ctx.lineTo(xL2, yL2);
+				ctx.moveTo(xL2, yL2);
 				ctx.arc(RADIUS, RADIUS, r2, a1, a2);
 				ctx.lineTo(xU1, yU1);
 				ctx.arc(RADIUS, RADIUS, r1, a2, a1, true);
-				ctx.fillStyle = `rgba(255, 165, 0, .5)`;
+				ctx.closePath();
 				ctx.fill();
+				ctx.stroke();
 			}
 			
 			function getContext() {
