@@ -60,7 +60,11 @@
 			let directionIndex = 0;
 			const distanceNames = ["Few paces", "Halfway", "Near sea"];
 			let distanceIndex = 1;
-			const islandNames = ["Frostmill Island", "Ravenna", "Forest of Cerunno", "Shell Island", "Harvest Island", "Whitesummit", "Thorin's Refuge", "Silverhold", "Wind-Row Island", "Akursius Keep"];
+			const islandNames = [
+				"Frostmill Island", "Ravenna", "Forest of Cerunno", "Shell Island",
+				"Harvest Island", "Whitesummit", "Munera Garden", "Wind-Row Island",
+				"Palo Town", "Thorin's Refuge", "Limestone Key", "Akursius Keep", "Silverhold"
+			];
 			let islandIndex = 0;
 
 			const RADIUS = 256;
@@ -162,9 +166,10 @@
 	<body onload="update()">
 		<h1>Arcane Odyssey Treasure Chart Locator</h1>
 		<p>
-			Note: use shovel about 2 rowboat lengths apart<br>
+			Use shovel about 2 rowboat lengths apart<br>
 			Zoom in (ctrl+ or ctrl scrollwheel) to enlarge the map<br>
 			This list does not include islands with one treasure<br>
+			Some maps may be slightly off center or too big/small<br>
 			To reduce lag when switching islands, download the website <a target="_blank" href="https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip">here</a>
 		</p>
 		<div>
