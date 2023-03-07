@@ -75,7 +75,7 @@
 		</style>
 		<script type="text/javascript">
 			const directionNames = ["East", "East Southeast", "Southeast", "South Southeast", "South", "South Southwest", "Southwest", "West Southwest", "West", "West Northwest", "Northwest", "North Northwest", "North", "North Northeast", "Northeast", "East Northeast"];
-			const distanceNames = ["Few paces", "Halfway", "Near sea"];
+			const distanceNames = ["Few paces", "Halfway", "On the edge"];
 			const islandNames = [
 				"Frostmill Island", "Ravenna", "Forest of Cerunno", "Shell Island",
 				"Harvest Island", "Whitesummit", "Munera Garden", "Wind-Row Island",
@@ -192,18 +192,20 @@
 				const infoElement = document.getElementById("info");
 				infoElement.style.display = infoElement.style.display == "none" ? "" : "none";
 				element.innerText = infoElement.style.display == "" ? "Hide Info" : "Show Info";
+				window.sessionStorage.setItem("showInfo", infoElement.style.display);
 			}
 		</script>
 	</head>
-	<body onload="update()">
+	<body onload="update(); if (window.sessionStorage.getItem('showInfo')) toggleInfo(document.getElementById('visibility_button'));">
 		<h1>Arcane Odyssey Treasure Chart Locator</h1>
 		<button id="visibility_button" onclick="toggleInfo(this)">Hide Info</button>
 		<br>
 		<p id="info">
 			Use shovel about 2 rowboat lengths apart<br>
 			Zoom in (ctrl+ or ctrl scrollwheel) to enlarge the map<br>
-			This list does not include islands with one treasure<br>
+			This list does not include very small islands<br>
 			Some maps may be slightly off center or too big/small<br>
+
 			To reduce lag when switching islands, download the website <a target="_blank" href="https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip">here</a>
 		</p>
 		<br>
