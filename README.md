@@ -3,3 +3,6 @@ This simple html website shades an area over islands where treasure can be found
 
 # ↓↓↓ ACCESS THE SITE HERE ↓↓↓
 https://myaltaccountsthis.github.io/arcaneodysseytreasure/
+
+# ↓↓↓ DOWNLOAD THE SITE HERE ↓↓↓
+https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip

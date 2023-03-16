@@ -1,0 +1,83 @@
+* {
+  font-family: Comic Sans MS, Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: xx-large;
+}
+
+div, p {
+  font-size: large;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1vw;
+  margin: 4px auto;
+  width: 60%;
+  max-width: 300px;
+}
+
+.flex * {
+  text-align: center;
+}
+
+.flex > div {
+  min-width: 150px;
+}
+
+svg {
+  width: 25px;
+  height: 25px;
+}
+
+line {
+  stroke: black;
+  stroke-width: 3px;
+}
+
+button {
+  margin: 10px 0px;
+  padding: 0px;
+  border: 0;
+  background-color: transparent;
+  font-size: medium;
+}
+button#visibility_button {
+  font-size: large;
+}
+
+button.toggle {
+  padding: 4px 6px;
+  border: 1px black solid;
+  background-color: whitesmoke;
+}
+
+button.toggle:hover {
+  background-color: lightgray;
+}
+
+button.toggle:active {
+  background-color: darkgray;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+@media (min-width: 601px) {
+  .flex {
+    width: 50%;
+  }
+}
+
+@media (min-width: 721px) {
+  .flex {
+    width: 30%;
+  }
+}

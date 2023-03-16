@@ -3,211 +3,29 @@
 	<head>
 		<title>Arcane Odyssey Treasure Chart</title>
 		<link rel="shortcut icon" href="favicon.ico">
-		<style>
-			* {
-				font-family: Comic Sans MS, Arial, Helvetica, sans-serif;
-				text-align: center;
-			}
-			h1 {
-				text-align: center;
-				font-size: xx-large;
-			}
-			div, p {
-				font-size: large;
-			}
-			.flex {
-				display: flex;
-				flex-direction: row;
-				justify-content: center;
-				align-items: center;
-				column-gap: 1vw;
-				margin: 4px auto;
-				width: 60%;
-				max-width: 300px;
-			}
-			.flex * {
-				text-align: center;
-			}
-			.flex > div {
-				min-width: 150px;
-			}
-			#info {
-				margin: 0px;
-				margin-top: 16px;
-			}
-			svg {
-				width: 25px;
-				height: 25px;
-			}
-			line {
-				stroke: black;
-				stroke-width: 3px;
-			}
-			button {
-				padding: 0px;
-				border: 0;
-				background-color: transparent;
-			}
-			button#visibility_button {
-				padding: 4px 6px;
-				border: 1px black solid;
-				background-color: whitesmoke;
-			}
-			button#visibility_button:hover {
-				background-color: lightgray;
-			}
-			button#visibility_button:active {
-				background-color: darkgray;
-			}
-			button:hover {
-				cursor: pointer;
-			}
-			@media (min-width: 601px) {
-				.flex {
-					width: 50%;
-				}
-			}
-			@media (min-width: 721px) {
-				.flex {
-					width: 30%;
-				}
-			}
-		</style>
-		<script type="text/javascript">
-			const directionNames = ["East", "East Southeast", "Southeast", "South Southeast", "South", "South Southwest", "Southwest", "West Southwest", "West", "West Northwest", "Northwest", "North Northwest", "North", "North Northeast", "Northeast", "East Northeast"];
-			const distanceNames = ["Few paces", "Halfway", "On the edge"];
-			const islandNames = [
-				"Frostmill Island", "Ravenna", "Forest of Cerunno", "Shell Island",
-				"Harvest Island", "Whitesummit", "Munera Garden", "Wind-Row Island",
-				"Palo Town", "Thorin's Refuge", "Limestone Key", "Akursius Keep", "Silverhold"
-			];
-			let directionIndex = 0;
-			let distanceIndex = 1;
-			let islandIndex = 0;
-			if (window.sessionStorage.getItem("direction")) {
-				directionIndex = parseInt(window.sessionStorage.getItem("direction"));
-				distanceIndex = parseInt(window.sessionStorage.getItem("distance"));
-				islandIndex = parseInt(window.sessionStorage.getItem("island"));
-			}
-
-			const RADIUS = 256;
-
-			const image = new Image();
-			image.onload = () => drawCanvas();
-
-			// angle goes clockwise starting from the x-axis
-			function get2DComponents(angle, radius) {
-				return {x: RADIUS + radius * Math.cos(-angle), y: RADIUS + radius * Math.sin(-angle)};
-			}
-
-			function drawCanvas() {
-				const ctx = getContext();
-				// draw island
-				ctx.drawImage(image, 0, 0);
-				// needed variables
-				const angle = Math.PI * directionIndex / 8;
-				const a1 = angle - Math.PI / 16, a2 = angle + Math.PI / 16
-				const r1 = distanceIndex * RADIUS / 3, r2 = r1 + RADIUS / 3;
-				const {xL1, yL1} = get2DComponents(a1, r1);
-				const {xL2, yL2} = get2DComponents(a1, r2);
-				const {xU1, yU1} = get2DComponents(a2, r1);
-				const {xU2, yU2} = get2DComponents(a2, r2);
-				/*
-				// draw angle
-				ctx.fillStyle = "rgba(255, 255, 255, .2)";
-				ctx.strokeStyle = "rgba(0, 0, 0, .4)";
-				ctx.lineWidth = 1;
-				ctx.beginPath();
-				ctx.moveTo(RADIUS, RADIUS);
-				ctx.arc(RADIUS, RADIUS, RADIUS, a1, a2);
-				ctx.closePath();
-				ctx.fill();
-				ctx.stroke();
-				*/
-				// draw the semi sector
-				ctx.fillStyle = "rgba(0, 207, 11, .2)";
-				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
-				ctx.lineWidth = 1;
-				ctx.beginPath();
-				ctx.moveTo(xL1, yL1);
-				ctx.lineTo(xL2, yL2);
-				ctx.moveTo(xL2, yL2);
-				ctx.arc(RADIUS, RADIUS, r2, a1, a2);
-				ctx.lineTo(xU1, yU1);
-				ctx.arc(RADIUS, RADIUS, r1, a2, a1, true);
-				ctx.closePath();
-				ctx.fill();
-				ctx.stroke();
-			}
-			
-			function getContext() {
-				const canvas = document.getElementById("canvas");
-				if (canvas.getContext) {
-					return canvas.getContext("2d");
-				}
-			}
-			
-			function update() {
-				document.getElementById("direction").innerText = directionNames[directionIndex];
-				document.getElementById("distance").innerText = distanceNames[distanceIndex];
-				document.getElementById("island").innerText = islandNames[islandIndex];
-				window.sessionStorage.setItem("direction", directionIndex);
-				window.sessionStorage.setItem("distance", distanceIndex);
-				window.sessionStorage.setItem("island", islandIndex);
-				ctx = getContext();
-				image.src = islandNames[islandIndex] + ".png";
-			}
-
-			function directionLeft() {
-				directionIndex = (directionIndex + directionNames.length - 1) % directionNames.length;
-				update();
-			}
-
-			function directionRight() {
-				directionIndex = (directionIndex + 1) % directionNames.length;
-				update();
-			}
-
-			function distanceLeft() {
-				distanceIndex = (distanceIndex + distanceNames.length - 1) % distanceNames.length;
-				update();
-			}
-
-			function distanceRight() {
-				distanceIndex = (distanceIndex + 1) % distanceNames.length;
-				update();
-			}
-
-			function islandLeft() {
-				islandIndex = (islandIndex + islandNames.length - 1) % islandNames.length;
-				update();
-			}
-
-			function islandRight() {
-				islandIndex = (islandIndex + 1) % islandNames.length;
-				update();
-			}
-
-			function toggleInfo(element) {
-				const infoElement = document.getElementById("info");
-				infoElement.style.display = infoElement.style.display == "none" ? "" : "none";
-				element.innerText = infoElement.style.display == "" ? "Hide Info" : "Show Info";
-				window.sessionStorage.setItem("showInfo", infoElement.style.display);
-			}
-		</script>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="scripts.js"></script>
+		<script type="text/javascript"></script>
 	</head>
-	<body onload="update(); if (window.sessionStorage.getItem('showInfo')) toggleInfo(document.getElementById('visibility_button'));">
+	<body onload="onBodyLoad();">
 		<h1>Arcane Odyssey Treasure Chart Locator</h1>
-		<button id="visibility_button" onclick="toggleInfo(this)">Hide Info</button>
+		<button id="visibility_button" class="toggle" onclick="toggleInfo(this)">Hide Info</button>
 		<br>
-		<p id="info">
-			Use shovel about 2 rowboat lengths apart<br>
-			Zoom in (ctrl+ or ctrl scrollwheel) to enlarge the map<br>
-			This list does not include very small islands<br>
-			Some maps may be slightly off center or too big/small<br>
-
-			To reduce lag when switching islands, download the website <a target="_blank" href="https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip">here</a>
-		</p>
+		<div id="info">
+			<div>
+				Made by <b>myaltaccountsthis</b> (<a target="_blank" href="https://www.discordapp.com/users/348557609831497730" title="myaltaccountsthis#0507">Discord</a> | <a target="_blank" href="https://www.youtube.com/myaltaccountsthis" title="myaltaccountsthis">YouTube</a>)
+			</div>
+			<div>Use shovel about 2 rowboat lengths apart</div>
+			<div>Zoom in (ctrl+ or ctrl scrollwheel) to enlarge the map</div>
+			<div>This list does not include very small islands</div>
+			<div>Some maps may be slightly off center or too big/small</div>
+			<div>Check the source code <a target="_blank" href="https://github.com/myaltaccountsthis/arcaneodysseytreasure">here</a></div>
+			<button id="guides_button" class="toggle" onclick="toggleGuides(this)">Hide More Guides</button>
+			<br>
+			<div id="guides">
+				<div><a target="_blank" href="https://docs.google.com/presentation/d/1F8-wjkYacgPZFN31cq05TqTsPN3v3X_gzQxA4RDsjGA/edit?usp=sharing">Wanted Criminal Locations</a></div>
+			</div>
+		</div>
 		<br>
 		<div>
 			<div class="flex">
