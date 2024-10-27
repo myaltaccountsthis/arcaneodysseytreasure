@@ -1,8 +1,11 @@
 # Arcane Odyssey Treasure Chart Helper
 This simple html website shades an area over islands where treasure can be found, to easily locate possible treasure spots.
 
-# ↓↓↓ ACCESS THE SITE HERE ↓↓↓
-https://myaltaccountsthis.github.io/arcaneodysseytreasure/
+# ↓↓↓ NEW WEBSITE SOURCE CODE ↓↓↓
+https://github.com/myaltaccountsthis/arcane-odyssey-guides
 
-# ↓↓↓ DOWNLOAD THE SITE HERE ↓↓↓
+# ↓↓↓ ACCESS THE SITE HERE ↓↓↓
+https://myaltaccountsthis.github.io/arcane-odyssey-guides/treasure
+
+# ↓↓↓ old site download ↓↓↓
 https://github.com/myaltaccountsthis/arcaneodysseytreasure/archive/refs/heads/master.zip
